@@ -32,6 +32,8 @@ github = oauth.remote_app(
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
+else
+    pprint("You must be logged in to post on this forum.")
 
 @app.route('/')
 def home():
