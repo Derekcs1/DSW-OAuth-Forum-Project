@@ -6,6 +6,11 @@ import pprint
 import os
 import json
 
+file = "posts.json"
+try:
+    with open posts
+except:
+    pprint("posts is not opening")
 app = Flask(__name__)
 
 app.debug = True #Change this to False for production
