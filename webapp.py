@@ -6,11 +6,7 @@ import pprint
 import os
 import json
 
-file = "posts.json"
-try:
-    with open posts
-except:
-    pprint("posts is not opening")
+
 app = Flask(__name__)
 
 app.debug = True #Change this to False for production
@@ -80,6 +76,18 @@ def authorized():
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
+
+def  posts_to_html
+    file = "posts.json"
+    try:
+         with open posts
+    except:
+          pprint("posts are not opening")
+    <table>
+    for c in posts:
+         options += Markup("<option value=\"" + c["name"] + "\">" + c["name"] + "</option>")
+        
+        
 
 
 if __name__ == '__main__':
