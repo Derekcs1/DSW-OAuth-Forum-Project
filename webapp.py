@@ -42,10 +42,18 @@ def home():
 
 @app.route('/posted', methods=['POST'])
 def post():
-    data = json.load(f)
-    f.seek(0)
-    f.truncate()
-    json.dump(data,f)
+    username = session['user_data']['login']
+    message = request.form['message']
+    try:
+        with open('forum.json', 'r+') as f:
+            data = json.load(f)
+            data.append({"username":username, "message":message})
+            f.seek(0)
+            f.truncate()
+            json.dump(data, f)
+    except Exception as e:
+        print("Unable to load JSON :(")
+        print(e)
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
     #Every post should include the username of the poster and text of the post. 
 
