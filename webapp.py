@@ -77,7 +77,7 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
-def  posts_to_html
+def  posts_to_html 
     options = ""
     try:
          with open posts
