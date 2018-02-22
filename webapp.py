@@ -86,16 +86,18 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
-def  posts_to_html 
-    options = ""
-    try:
-         with open posts
+def  posts_to_html
+       forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
+    try: 
+        with open('posts.json', 'r') as f:
+            data = json.load(f)
+            for i in data:
+                print("Username: " + i["username"] + "     Message: " + i["message"])
+                forum_table += Markup("<tr> <td>" + i["username"] + "</td> <td>" + i["message"] + "</td>")
     except:
-          pprint("posts are not opening")
-    <table>
-    for c in posts:
-         options += Markup("<table>  <tr> value=\"" + c + "\">" + c + "</table>")
-     return options   
+        print("posts are not opening")
+    forum_table += Markup("</table>")
+    return forum_table   
         
 
 
