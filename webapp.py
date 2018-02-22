@@ -5,8 +5,9 @@ from flask import render_template
 import pprint
 import os
 import json
-
-
+file = "posts.json"
+OS.system("echo'[]'> " + posts)
+          
 app = Flask(__name__)
 
 app.debug = True #Change this to False for production
@@ -78,7 +79,6 @@ def get_github_oauth_token():
     return session.get('github_token')
 
 def  posts_to_html
-    file = "posts.json"
     try:
          with open posts
     except:
