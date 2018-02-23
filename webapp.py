@@ -5,8 +5,9 @@ from flask import render_template
 import pprint
 import os
 import json
-file = "posts.json"
-os.system("echo'[]'> " + posts)
+
+os.system("echo '[]'>" + 'forum.json')
+
 app = Flask(__name__)
 
 app.debug = True #Change this to False for production
@@ -33,24 +34,41 @@ github = oauth.remote_app(
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
-else
-    pprint("You must be logged in to post on this forum.")
 
 @app.route('/')
 def home():
     return render_template('home.html', past_posts=posts_to_html())
+
+def posts_to_html():
+    forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
+    try: 
+        with open('forum.json', 'r') as f:
+            data = json.load(f)
+            for i in data:
+                print("Username: " + i["username"] + "     Message: " + i["message"])
+                forum_table += Markup("<tr> <td>" + i["username"] + "</td> <td>" + i["message"] + "</td>")
+    except:
+        print("Unable to load json :(")
+    forum_table += Markup("</table>")
+    return forum_table
 
 @app.route('/posted', methods=['POST'])
 def post():
     username = session['user_data']['login']
     message = request.form['message']
     try:
-        with open('posts.json', 'r+') as f:
+        with open('forum.json', 'r+') as f:
             data = json.load(f)
             data.append({"username":username, "message":message})
             f.seek(0)
             f.truncate()
             json.dump(data, f)
+    except Exception as e:
+        print("Unable to load JSON :(")
+        print(e)
+        
+    return render_template('home.html', past_posts = posts_to_html())
+        
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
     #Every post should include the username of the poster and text of the post. 
 
@@ -85,20 +103,6 @@ def authorized():
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
-
-def  posts_to_html
-       forum_table = Markup("<table class='table table-bordered'> <tr> <th> Username </th> <th> Message </th> </tr>")
-    try: 
-        with open('posts.json', 'r') as f:
-            data = json.load(f)
-            for i in data:
-                print("Username: " + i["username"] + "     Message: " + i["message"])
-                forum_table += Markup("<tr> <td>" + i["username"] + "</td> <td>" + i["message"] + "</td>")
-    except:
-        print("posts are not opening")
-    forum_table += Markup("</table>")
-    return forum_table   
-        
 
 
 if __name__ == '__main__':
