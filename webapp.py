@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, Markup
 from flask_oauthlib.client import OAuth
 from flask import render_template
+
 import pprint
 import os
 import json
@@ -58,10 +59,11 @@ def post():
     try:
         with open('forum.json', 'r+') as f:
             data = json.load(f)
-            data.append({"username":username, "message":message})
-            f.seek(0)
-            f.truncate()
-            json.dump(data, f)
+            if username!=data[-1]["username"] and message!=data[-1]["message"]:
+                data.append({"username":username, "message":message})
+                f.seek(0)
+                f.truncate()
+                json.dump(data, f)
     except Exception as e:
         print("Unable to load JSON :(")
         print(e)
@@ -102,6 +104,9 @@ def authorized():
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
+
+def run_once():
+    data.append({"username":"", "message":""})
 
 
 if __name__ == '__main__':
