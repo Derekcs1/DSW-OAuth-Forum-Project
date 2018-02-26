@@ -4,14 +4,15 @@
 
 {% block content %}
   <h1>Forum</h1>
-  <p>This forum is about bunnies that golf. Please pos tall golf-bunny related conversation here. The rules: No rabbits, only bunnies. Tiger woods is banned. Only domestic bunnies may post. No pictures of intoxicated bunnies. That's it. Have fun!</p>
-  
-  <form action='/posted' method="post">
-    <textarea name="message" style="width:100%; height:100px;"></textarea>
-    <br>
-    <input type="submit" value="Post">
-  </form>
-  
+  <p>Life forum.  Post whats on your mind.</p>
+  {% if logged_in %}
+    <form action='/posted' method="post">
+      <textarea name="message" style="width:100%; height:100px;"></textarea>
+      <br>
+      <input type="submit" value="Post">
+    </form>
+  {% endif %}  
+
   {{ past_posts }}
 
 
